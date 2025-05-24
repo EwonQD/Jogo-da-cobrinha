@@ -1,6 +1,5 @@
 import pygame
 import os
-pygame.init()
 
 # Tela
 largura = 800
@@ -25,6 +24,16 @@ tamanho_cobra = 20
 
 # Palavras
 palavras = ["bola", "casa", "gato", "sol", "lua", "pato", "amor", "faca", "pé", "rio"]
+
+def cor_pastel():
+    import random
+    base = 180
+    r = random.randint(base, 255)
+    g = random.randint(base, 255)
+    b = random.randint(base, 255)
+    return (r, g, b, 100)  # alfa para semi-transparência, só se usar Surface com alpha
+
+
 
 # Arquivo de tempo
 ARQUIVO_TEMPOS = os.path.join("minhoquinhaDoConhecimento", "melhores_tempos.txt")

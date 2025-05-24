@@ -1,7 +1,8 @@
 import pygame
 from constantes import *
 from jogo import *
-from utils import carregar_melhores_tempos
+from sons import som_inicio
+
 
 def desenhar_botao(texto, retangulo, mouse_pos):
     cor = cor_botao_hover if retangulo.collidepoint(mouse_pos) else cor_botao
@@ -15,10 +16,12 @@ def desenhar_botao(texto, retangulo, mouse_pos):
 
 
 def tela_inicial(ultimo_tempo, melhores_tempos):
+    
     rodando = True
     botao_inicio = pygame.Rect(largura//2 - 100, altura//2, 200, 50)
-
     while rodando:
+        som_inicio.play() 
+        som_inicio.set_volume(0.2)  
         tela.fill(cor_fundo)
         mouse_pos = pygame.mouse.get_pos()
 
@@ -48,6 +51,7 @@ def tela_inicial(ultimo_tempo, melhores_tempos):
                 return False
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if botao_inicio.collidepoint(mouse_pos):
+                    som_inicio.stop()
                     return True
 
         pygame.display.update()

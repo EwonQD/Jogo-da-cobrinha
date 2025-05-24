@@ -2,9 +2,11 @@ import pygame
 import random
 import time
 from utils import *
+from sons import *
+
 
 def jogo():
-    pygame.init()
+    fonte = pygame.font.SysFont(None, 25)
     palavra = random.choice(palavras)
     indice_letra = 0
     letra_correta = palavra[indice_letra]
@@ -27,6 +29,7 @@ def jogo():
 
     clock = pygame.time.Clock()
     jogo_em_execucao = True
+    som_loopgame.play(-1) # O -1 reproduz o audio em loop
 
     # INICIO CRONÔMETRO
     tempo_inicio = time.time()
@@ -67,6 +70,8 @@ def jogo():
 
         if letra_comida:
             if letra_comida == letra_correta:
+                som_coleta.play()
+                som_coleta.set_volume(1.9)
                 letras_coletadas += letra_comida
                 indice_letra += 1
                 letras_visiveis.pop(indice_letra_comida)
@@ -77,6 +82,7 @@ def jogo():
                 else:
                     letra_correta = palavra[indice_letra]
             else:
+                som_derrota.play()
                 perdeu = True
                 jogo_em_execucao = False
         else:
@@ -118,9 +124,13 @@ def jogo():
     tempo_final = time.time() - tempo_inicio
 
     if venceu:
+        som_loopgame.stop()
+        som_win.play()
         salvar_tempo(tempo_final)
         mostrar_mensagem(f"Você venceu! Tempo: {int(tempo_final//60):02d}:{int(tempo_final%60):02d}", (0, 255, 0))
+        pygame.time.wait(2000)   # espera 3000 ms = 3 segundos
     elif perdeu:
+        som_loopgame.stop()
         mostrar_mensagem("Você perdeu! Tente novamente.", (255, 0, 0))
 
     return True, tempo_final
