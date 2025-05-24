@@ -80,3 +80,5 @@ def gerar_letras_completas(palavra, linhas=5, colunas=5):
             i += 1
 
     return letras_pos
+
+

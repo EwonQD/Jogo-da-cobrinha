@@ -1,6 +1,8 @@
 import random
 import pygame
 pygame.init()
+from sons import som_inicio
+som_inicio.play()
 from constantes import *
 from jogo import jogo
 from tela_inicial import tela_inicial

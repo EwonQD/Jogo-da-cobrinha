@@ -3,26 +3,32 @@ from constantes import *
 from jogo import *
 from sons import som_inicio
 
+fonte = pygame.font.SysFont(None, 25)
 
+imagem_fundo = pygame.image.load("minhoquinhaDoConhecimento\\visual\\inicio.png").convert()
+imagem_fundo = pygame.transform.scale(imagem_fundo, (largura, altura))
 def desenhar_botao(texto, retangulo, mouse_pos):
     cor = cor_botao_hover if retangulo.collidepoint(mouse_pos) else cor_botao
     pygame.draw.rect(tela, cor, retangulo)
     texto_img = fonte_titulo.render(texto, True, cor_texto)
     texto_rect = texto_img.get_rect(center=retangulo.center)
+
     tela.blit(texto_img, texto_rect)
 
 
 
 
 
-def tela_inicial(ultimo_tempo, melhores_tempos):
-    
+def tela_inicial(ultimo_tempo, melhores_tempos):    
     rodando = True
     botao_inicio = pygame.Rect(largura//2 - 100, altura//2, 200, 50)
-    while rodando:
-        som_inicio.play() 
-        som_inicio.set_volume(0.2)  
-        tela.fill(cor_fundo)
+
+    # Garante que a música será reiniciada corretamente
+    som_inicio.stop()
+    som_inicio.set_volume(0.8)
+    som_inicio.play(-1)  # -1 para repetir em loop
+    while rodando:        
+        tela.blit(imagem_fundo, (0, 0))
         mouse_pos = pygame.mouse.get_pos()
 
         titulo = fonte_titulo.render("Minhoquinha do Conhecimento", True, cor_texto)
@@ -47,7 +53,7 @@ def tela_inicial(ultimo_tempo, melhores_tempos):
         desenhar_botao("Iniciar", botao_inicio, mouse_pos)
 
         for evento in pygame.event.get():
-            if evento.type == pygame.QUIT:
+            if evento.type == pygame.QUIT:  
                 return False
             elif evento.type == pygame.MOUSEBUTTONDOWN:
                 if botao_inicio.collidepoint(mouse_pos):
