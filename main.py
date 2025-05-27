@@ -1,13 +1,18 @@
 import random
-import pygame
+import pygame, sys, os
 pygame.init()
-from sons import som_inicio
-som_inicio.play()
-from constantes import *
-from jogo import jogo
-from tela_inicial import tela_inicial
-from utils import carregar_melhores_tempos
 
+from data import som_inicio
+
+from data.constantes import *
+from data.jogo import jogo
+from data.tela_inicial import tela_inicial
+from data.utils import carregar_melhores_tempos
+
+dirpath = os.getcwd()
+sys.path.append(dirpath)
+if getattr(sys, "frozen", False):
+    os.chdir(sys._MEIPASS)
 
 def __init__(self):
     self.x = random.uniform(0, largura)
